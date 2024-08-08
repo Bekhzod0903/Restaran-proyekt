@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ category.name }}</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center">{{ category.name }}</h1>
+
+        <ul class="list-group">
+            {% for food in foods %}
+                <li class="list-group-item">
+                    <h2>{{ food.name }}</h2>
+                    {% if food.image %}
+                        <img src="{{ food.image.url }}" alt="{{ food.name }}" class="img-fluid" style="width: 200px; height: auto;">
+                    {% endif %}
+                    <p>{{ food.description }}</p>
+                    <p>Price: ${{ food.price }}</p>
+                    <a class="btn btn-success" href="{% url 'add_to_cart' food.id %}">Add to Cart</a>
+                </li>
+            {% empty %}
+                <li class="list-group-item">No food items available in this category.</li>
+            {% endfor %}
+        </ul>
+
+        <a class="btn btn-primary mt-3" href="{% url 'view_cart' %}">View Cart</a>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
