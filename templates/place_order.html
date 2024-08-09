@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Place Order</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+    </style>
+    <script>
+        function toggleCardDetails() {
+            var paymentMethod = document.querySelector('input[name="payment_method"]:checked').value;
+            var cardDetails = document.getElementById('card-details');
+            if (paymentMethod === 'card') {
+                cardDetails.style.display = 'block';
+            } else {
+                cardDetails.style.display = 'none';
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center">Place Your Order</h1>
+        <form method="post" action="{% url 'place_order' %}">
+            {% csrf_token %}
+            <div class="form-group">
+                <label>Payment Method:</label><br>
+                <input type="radio" name="payment_method" value="cash" onclick="toggleCardDetails()" checked> Cash<br>
+                <input type="radio" name="payment_method" value="card" onclick="toggleCardDetails()"> Card
+            </div>
+            <div id="card-details" style="display: none;">
+                <div class="form-group">
+                    <label for="card_number">Card Number:</label>
+                    <input type="text" class="form-control" id="card_number" name="card_number" placeholder="Enter your card number">
+                </div>
+                <!-- You can add more card details inputs here (e.g., expiration date, CVV) -->
+            </div>
+            <button type="submit" class="btn btn-primary">Confirm Order</button>
+        </form>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

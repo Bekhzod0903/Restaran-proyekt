@@ -15,11 +15,19 @@
         <h1 class="text-center">Your Cart</h1>
         <ul class="list-group">
             {% for item in cart_items %}
-                <li class="list-group-item">{{ item.quantity }} x {{ item.food.name }} - ${{ item.food.price }}</li>
+                <li class="list-group-item">
+                    {{ item.quantity }} x {{ item.food.name }} - ${{ item.food.price }}
+                    <a href="{% url 'increment_item' item.id %}" class="btn btn-secondary btn-sm">+</a>
+                    <a href="{% url 'decrement_item' item.id %}" class="btn btn-secondary btn-sm">-</a>
+                </li>
             {% empty %}
                 <li class="list-group-item">Your cart is empty.</li>
             {% endfor %}
         </ul>
+        <form action="{% url 'delete_cart' %}" method="post" class="mt-4">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Clear Cart</button>
+        </form>
         <form action="{% url 'place_order' %}" method="post" class="mt-4">
             {% csrf_token %}
             <button type="submit" class="btn btn-primary">Place Order</button>
